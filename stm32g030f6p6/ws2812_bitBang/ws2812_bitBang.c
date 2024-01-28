@@ -96,7 +96,7 @@ void WsWheel(uint8_t color, uint16_t idx, uint8_t fade) {
 
 // *************************** Wheel **************************
 //#define WEEL_FPS    20
-void WsWeel(void) {
+void WsWheelTick(void) { // Call every WEEL_FPS milliseconds
 	static uint8_t nn = 255, fade = 127, inc = 1;
 
 	for (uint8_t i = 0; i < NUM_LEDS; i++) { WsWheel(nn + i * 11, i, fade); }
