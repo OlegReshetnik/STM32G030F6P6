@@ -16,4 +16,4 @@ uint8_t WsGamma(uint8_t val);
 void WsInit(void);
 void WsSend(void);
 
-void WsWeel(void);
+void WsWheelTick(void); // Call every WEEL_FPS milliseconds
