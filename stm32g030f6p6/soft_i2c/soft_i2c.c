@@ -60,7 +60,7 @@ uint8_t I2C_WriteByte(uint8_t b) {
 	return ack;
 }
 
-uint8_t I2C_Write(uint8_t address, uint8_t *data, uint8_t cnt) { // адрес должен быть сдвинут
+uint8_t I2C_Write(uint8_t address, uint8_t *data, uint8_t cnt) { // the address must already be shifted
 	I2C_Start();
 	I2C_WriteByte(address);
 	while (cnt--) { I2C_WriteByte(*data++); }
