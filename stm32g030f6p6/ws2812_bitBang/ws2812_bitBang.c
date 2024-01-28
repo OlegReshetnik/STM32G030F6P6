@@ -25,9 +25,9 @@ inline uint8_t WsGamma(uint8_t val) { return wsGammaTable[val]; }
 #endif
 
 void WsInit(void) {
-	PORT_CLOCK_ON(WS_PORT);
-	PIN_MODE(WS_PORT, WS_PIN, MODE_OUTPUT);
-	SET_SPEED(WS_PORT, WS_PIN, SPEED_HIGH);
+	PORT_CLOCK_ON(WS_PIM);
+	PIN_MODE(WS_PIN, MODE_OUTPUT);
+	SET_SPEED(WS_PIN, SPEED_HIGH);
 }
 
 void WsSend(void) {
@@ -40,22 +40,18 @@ void WsSend(void) {
 		m = 0x80;
 		while (m) {
 			if (m & b) {
-				PIN_SET(WS_PORT, WS_PIN);
-				//WS_PORT->BSRR = 1 << WS_PIN;
+				PIN_SET(WS_PIN);
 				asm volatile(" nop; nop; nop; nop; nop; nop; nop; nop; nop; nop;");
 				asm volatile(" nop; nop; nop; nop; nop; nop; nop; nop; nop; nop;");
 				asm volatile(" nop; nop; nop; nop; nop; nop; nop; nop;"); // 28
-				PIN_RESET(WS_PORT, WS_PIN);
-				//WS_PORT->BRR = 1 << WS_PIN;
+				PIN_RESET(WS_PIN);
 				asm volatile(" nop; nop; nop; nop; nop; nop; nop; nop; nop; nop;");
 				asm volatile(" nop; nop; nop; nop;"); // 14
 			} else {
-				PIN_SET(WS_PORT, WS_PIN);
-				//WS_PORT->BSRR = 1 << WS_PIN;
+				PIN_SET(WS_PIN);
 				asm volatile(" nop; nop; nop; nop; nop; nop; nop; nop; nop; nop;");
 				asm volatile(" nop; nop; nop; nop;"); // 14
-				PIN_RESET(WS_PORT, WS_PIN);
-				//WS_PORT->BRR = 1 << WS_PIN;
+				PIN_RESET(WS_PIN);
 				asm volatile(" nop; nop; nop; nop; nop; nop; nop; nop; nop; nop;");
 				asm volatile(" nop; nop; nop; nop; nop; nop; nop; nop; nop; nop;");
 				asm volatile(" nop; nop; nop; nop; nop; nop; nop; nop;"); // 28
@@ -98,7 +94,7 @@ void WsWheel(uint8_t color, uint16_t idx, uint8_t fade) {
 	WsSetRGB(r, g, b, idx, fade);
 }
 
-// *************************** Колесо **************************
+// *************************** Wheel **************************
 //#define WEEL_FPS    20
 void WsWeel(void) {
 	static uint8_t nn = 255, fade = 127, inc = 1;
@@ -109,4 +105,4 @@ void WsWeel(void) {
 	if (fade > 254) { inc = 255; }
 	else if (fade < 70) { inc = 1; }
 }
-// *************************** End Колесо **************************
+// *************************** End Wheel **************************
